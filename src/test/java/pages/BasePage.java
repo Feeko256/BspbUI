@@ -5,6 +5,7 @@ import config.Config;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.WaitManager;
 
 import java.time.Duration;
 
@@ -19,8 +20,7 @@ public abstract class BasePage {
 
     public Boolean isDisplayed() {
         try {
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Config.WAIT_TIME));
-            wait.until(visibilityOfElementLocated(locator));
+            WaitManager.getWait().until(visibilityOfElementLocated(locator));
             return true;
         } catch (TimeoutException e) {
             return false;

@@ -4,6 +4,7 @@ import browser.Driver;
 import config.Config;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import utils.WaitManager;
 
 public abstract class BaseTest {
 
@@ -15,5 +16,6 @@ public abstract class BaseTest {
     @AfterEach
     protected void tearDown() {
         Driver.closeDriver();
+        WaitManager.clearWait();
     }
 }

@@ -6,13 +6,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.WaitManager;
 
 import java.time.Duration;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public abstract class Element {
-    private final By locator;
+    protected final By locator;
 
     protected Element(By locator) {
         this.locator = locator;
@@ -20,10 +22,13 @@ public abstract class Element {
 
     protected WebElement getElement() {
         try {
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Config.WAIT_TIME));
-            return wait.until(visibilityOfElementLocated(locator));
+            return WaitManager.getWait().until(elementToBeClickable(locator));
         } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected String getText(){
+        return getElement().getText();
     }
 }
