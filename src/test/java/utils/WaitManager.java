@@ -8,6 +8,7 @@ import java.time.Duration;
 
 public class WaitManager {
     private static WebDriverWait wait = null;
+
     public static WebDriverWait getWait() {
         if (wait == null) {
             wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Config.WAIT_TIME));

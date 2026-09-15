@@ -9,7 +9,7 @@ import pages.MainPage;
 public class MainPageTest extends BaseTest {
 
     @Test
-    void checkClientsTypePageTest(){
+    void checkClientsTypePageTest() {
         MainPage main = new MainPage();
         BusinessPage businessPage = new BusinessPage();
 
@@ -20,7 +20,7 @@ public class MainPageTest extends BaseTest {
     }
 
     @Test
-    void regionSelectTest(){
+    void regionSelectTest() {
         MainPage main = new MainPage();
         Assertions.assertTrue(main.isDisplayed());
         Assertions.assertEquals(TestData.REGION_TO_SELECT, main.changeRegion(TestData.REGION_TO_SELECT));

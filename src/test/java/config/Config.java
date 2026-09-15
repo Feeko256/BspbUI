@@ -13,7 +13,7 @@ public class Config {
             "--start-maximized",
             "--ignore-certificate-errors",
             "--allow-running-insecure-content");
-    public static final PageLoadStrategy  STRATEGY = PageLoadStrategy.EAGER;
-    public static final Integer  WAIT_TIME = 10;
-    public static final String  URL = "https://www.bspb.ru/";
+    public static final PageLoadStrategy STRATEGY = PageLoadStrategy.EAGER;
+    public static final Integer WAIT_TIME = 10;
+    public static final String URL = "https://www.bspb.ru/";
 }

@@ -1,7 +1,6 @@
 package elements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import utils.WaitManager;
 
 public class Button extends Element {

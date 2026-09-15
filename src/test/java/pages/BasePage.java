@@ -1,13 +1,8 @@
 package pages;
 
-import browser.Driver;
-import config.Config;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.WaitManager;
-
-import java.time.Duration;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
