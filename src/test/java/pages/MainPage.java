@@ -5,9 +5,9 @@ import org.openqa.selenium.By;
 
 public class MainPage extends BasePage{
     private static final String MAIN_PAGE_LOCATOR = "//*[text()='Выберите свой продукт']";
+    private static final String REGION_BUTTON_ATTR = "aria-expanded";
     private final Button businessButton = new Button(By.xpath("//nav//*[text()='Бизнесу']"));
     private final Button regionSelectButton = new Button(By.xpath("//*[contains(@id, \"menu-button\")]"));
-    private final Button regionToSelect = new Button(By.xpath("//*[contains(@id, \"menu-list\")]//*[text()='Санкт-Петербург']"));
     public MainPage() {
         super(By.xpath(MAIN_PAGE_LOCATOR));
     }
@@ -16,15 +16,10 @@ public class MainPage extends BasePage{
         businessButton.buttonClick();
     }
 
-    public void selectRegionButtonClick(){
-        regionSelectButton.buttonClickWithAtr("aria-expanded");
-    }
-
-    public String regionSelectorText(){
-        return regionSelectButton.getButtonText();
-    }
-
-    public void selectRegion(){
+    public String changeRegion(String regionName){
+        regionSelectButton.buttonClick(REGION_BUTTON_ATTR);
+        var regionToSelect = new Button(By.xpath("//*[contains(@id, \"menu-list\")]//*[text()='" + regionName + "']"));
         regionToSelect.buttonClick();
+        return regionSelectButton.getButtonText();
     }
 }

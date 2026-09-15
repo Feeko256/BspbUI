@@ -1,5 +1,6 @@
 package tests;
 
+import config.TestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pages.BusinessPage;
@@ -22,11 +23,6 @@ public class MainPageTest extends BaseTest {
     void regionSelectTest(){
         MainPage main = new MainPage();
         Assertions.assertTrue(main.isDisplayed());
-
-        Assertions.assertEquals("Вне региона", main.regionSelectorText());
-        main.selectRegionButtonClick();
-        main.selectRegion();
-        Assertions.assertEquals("Санкт-Петербург", main.regionSelectorText());
-
+        Assertions.assertEquals(TestData.REGION_TO_SELECT, main.changeRegion(TestData.REGION_TO_SELECT));
     }
 }
