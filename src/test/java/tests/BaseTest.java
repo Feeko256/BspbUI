@@ -1,19 +1,19 @@
 package tests;
 
 import browser.Driver;
-import config.TestData;
+import config.Config;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-public class BaseTest {
+public abstract class BaseTest {
 
     @BeforeEach
-    void init() {
-        Driver.getDriver().get(TestData.URL);
+    protected void init() {
+        Driver.getDriver().get(Config.URL);
     }
 
     @AfterEach
-    void tearDown() {
-        // Driver.closeDriver();
+    protected void tearDown() {
+        Driver.closeDriver();
     }
 }

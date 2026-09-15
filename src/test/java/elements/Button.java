@@ -7,7 +7,7 @@ public class Button extends Element{
         super(locator);
     }
 
-    public void ButtonClick(){
+    public void buttonClick(){
         getElement().click();
     }
 }
