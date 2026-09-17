@@ -6,7 +6,7 @@ import org.openqa.selenium.PageLoadStrategy;
 import java.util.List;
 
 public class Config {
-    public static final BrowserFactory BROWSER_TYPE = BrowserFactory.CHROME;
+    public static final BrowserFactory BROWSER_TYPE = BrowserFactory.EDGE;
     public static final List<String> OPTIONS = List.of(
             "--incognito",
             "--lang=ru",
