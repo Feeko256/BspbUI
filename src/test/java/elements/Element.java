@@ -5,7 +5,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import utils.WaitManager;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public abstract class Element {
     protected final By locator;
@@ -14,9 +14,9 @@ public abstract class Element {
         this.locator = locator;
     }
 
-    protected WebElement getElement() {
+    public WebElement getElement() {
         try {
-            return WaitManager.getWait().until(elementToBeClickable(locator));
+            return WaitManager.getWait().until(visibilityOfElementLocated(locator));
         } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }

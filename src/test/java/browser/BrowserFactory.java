@@ -9,15 +9,21 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public enum BrowserFactory {
     CHROME {
         @Override
         public WebDriver createDriver(List<String> args, PageLoadStrategy strategy) {
+            Map<String, Object> prefs = new HashMap<>();
+            prefs.put("profile.default_content_setting_values.geolocation", 2);
+
             ChromeOptions options = new ChromeOptions();
             options.addArguments(args);
             options.setPageLoadStrategy(strategy);
+            options.setExperimentalOption("prefs", prefs);
             return new ChromeDriver(options);
         }
     },
@@ -33,9 +39,13 @@ public enum BrowserFactory {
     EDGE {
         @Override
         public WebDriver createDriver(List<String> args, PageLoadStrategy strategy) {
+            Map<String, Object> prefs = new HashMap<>();
+            prefs.put("profile.default_content_setting_values.geolocation", 2);
+
             EdgeOptions options = new EdgeOptions();
             options.addArguments(args);
             options.setPageLoadStrategy(strategy);
+            options.setExperimentalOption("prefs", prefs);
             return new EdgeDriver(options);
         }
     };

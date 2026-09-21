@@ -4,6 +4,7 @@ import config.TestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pages.BusinessPage;
+import pages.DepositPage;
 import pages.MainPage;
 
 public class MainPageTest extends BaseTest {
@@ -24,5 +25,21 @@ public class MainPageTest extends BaseTest {
         MainPage main = new MainPage();
         Assertions.assertTrue(main.isDisplayed());
         Assertions.assertEquals(TestData.REGION_TO_SELECT, main.changeRegion(TestData.REGION_TO_SELECT));
+    }
+
+    @Test
+    void depositMenuClickTest(){
+        MainPage main = new MainPage();
+        DepositPage depositPage = new DepositPage();
+
+        main.depositMenuButtonClick();
+        Assertions.assertTrue(depositPage.isDisplayed());
+    }
+
+    @Test
+    void hoverDepositTabTest(){
+        MainPage main = new MainPage();
+        Assertions.assertTrue(main.isDisplayed());
+        main.hoverDepositTab();
     }
 }

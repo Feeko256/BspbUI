@@ -2,13 +2,20 @@ package pages;
 
 import elements.Button;
 import org.openqa.selenium.By;
+import utils.ActionsManager;
 
 public class MainPage extends BasePage {
     private static final String MAIN_PAGE_LOCATOR = "//*[text()='Выберите свой продукт']";
     private static final String REGION_BUTTON_ATTR = "aria-expanded";
     private static final String REGION_NAME_LOCATOR = "//*[contains(@id, \"menu-list\")]//*[text()='%s']";
+
     private final Button businessButton = new Button(By.xpath("//nav//*[text()='Бизнесу']"));
     private final Button regionSelectButton = new Button(By.xpath("//*[contains(@id, \"menu-button\")]"));
+    private final Button depositMenuButton = new Button(By.xpath("//*[contains(@class, \"chakra-link\")]//*[text()='Вклады']"));
+    private final Button OsenMenuButton = new Button(By.xpath("//*[contains(@class, \"chakra-link\")]//*[text()='Вклады']/following::*[text()='Осень']"));
+
+
+    // private final Button depositFormButton = new Button(By.xpath("//button[contains(@role, \"tab\")][text()='Вклад']"));
 
     public MainPage() {
         super(By.xpath(MAIN_PAGE_LOCATOR));
@@ -20,8 +27,19 @@ public class MainPage extends BasePage {
 
     public String changeRegion(String regionName) {
         regionSelectButton.buttonClick(REGION_BUTTON_ATTR);
+
         var regionToSelect = new Button(By.xpath(String.format(REGION_NAME_LOCATOR, regionName)));
         regionToSelect.buttonClick();
         return regionSelectButton.getButtonText();
+    }
+
+    public void depositMenuButtonClick() {
+        depositMenuButton.buttonClick();
+    }
+
+    public void hoverDepositTab() {
+        var element = depositMenuButton.getElement();
+        ActionsManager.moveToElement(element);
+        OsenMenuButton.buttonClick();
     }
 }
