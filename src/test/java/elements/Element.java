@@ -1,5 +1,6 @@
 package elements;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -9,11 +10,14 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 
 public abstract class Element {
     protected final By locator;
+    protected final String elementName;
 
-    protected Element(By locator) {
+    protected Element(By locator, String elementName) {
         this.locator = locator;
+        this.elementName = elementName;
     }
 
+    @Step("Получил элемент [{this.elementName}]")
     public WebElement getElement() {
         try {
             return WaitManager.getWait().until(visibilityOfElementLocated(locator));
@@ -22,6 +26,7 @@ public abstract class Element {
         }
     }
 
+    @Step("Получил текст элемента [{this.elementName}]")
     protected String getText() {
         return getElement().getText();
     }
