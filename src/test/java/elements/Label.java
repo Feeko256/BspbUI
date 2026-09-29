@@ -1,0 +1,11 @@
+package elements;
+
+import org.openqa.selenium.By;
+
+public class Label extends Element{
+
+
+    public Label(By locator, String elementName) {
+        super(locator, elementName);
+    }
+}

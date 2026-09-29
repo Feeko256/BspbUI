@@ -1,5 +1,6 @@
 package tests;
 
+import browser.Driver;
 import config.TestData;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Test;
@@ -29,10 +30,17 @@ public class MainPageTest extends BaseTest {
     @Test
     void regionSelectTest() {
         MainPage main = new MainPage();
-        assertThat(main.isDisplayed()).as("Главная страница  должна быть открыта").isTrue();
+        assertThat(main.isDisplayed()).as("Главная страница должна быть открыта").isTrue();
+
         step("Последовательная проверка смены регионов", () -> {
             assertSoftly(softly -> {
-                softly.assertThat(main.changeRegion(TestData.REGION_TO_SELECT))
+                String actual = main.changeRegion(TestData.REGION_TO_SELECT);
+              //  String expected =TestData.REGION_TO_SELECT;
+            //    String expected1 =TestData.REGION_TO_SELECT_1;
+             //   String expected2 =TestData.REGION_TO_SELECT_2;
+
+
+                softly.assertThat(actual)
                         .as(String.format("Выбранный регион не [%s]", TestData.REGION_TO_SELECT))
                         .isEqualTo(TestData.REGION_TO_SELECT);
                 softly.assertThat(main.changeRegion(TestData.REGION_TO_SELECT_1))

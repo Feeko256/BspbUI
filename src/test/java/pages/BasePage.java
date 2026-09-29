@@ -16,7 +16,7 @@ public abstract class BasePage {
         this.pageName = pageName;
     }
 
-    @Step("Проверка существования страницы [{this.pageName}]")
+    @Step("Отображена страница [{this.pageName}]")
     public Boolean isDisplayed() {
         try {
             WaitManager.getWait().until(visibilityOfElementLocated(locator));

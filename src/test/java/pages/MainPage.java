@@ -2,6 +2,7 @@ package pages;
 
 import elements.Button;
 import org.openqa.selenium.By;
+import pages.forms.DepositCalculator;
 import utils.ActionsManager;
 
 public class MainPage extends BasePage {
@@ -16,6 +17,7 @@ public class MainPage extends BasePage {
     private final Button depositMenuButton = new Button(By.xpath("//*[contains(@class, \"chakra-link\")]//*[text()='Вклады']"), "depositMenuButton");
     private final Button OsenMenuButton = new Button(By.xpath("//*[contains(@class, \"chakra-link\")]//*[text()='Вклады']/following::*[text()='Осень']"), "OsenMenuButton");
 
+    private final DepositCalculator depositCalculator = new DepositCalculator();
 
     // private final Button depositFormButton = new Button(By.xpath("//button[contains(@role, \"tab\")][text()='Вклад']"));
 
@@ -44,4 +46,6 @@ public class MainPage extends BasePage {
         ActionsManager.moveToElement(element);
         OsenMenuButton.buttonClick();
     }
+
+
 }

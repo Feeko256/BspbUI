@@ -17,7 +17,7 @@ public abstract class Element {
         this.elementName = elementName;
     }
 
-    @Step("Получил элемент [{this.elementName}]")
+    @Step("Получен элемент [{this.elementName}]")
     public WebElement getElement() {
         try {
             return WaitManager.getWait().until(visibilityOfElementLocated(locator));
@@ -26,7 +26,7 @@ public abstract class Element {
         }
     }
 
-    @Step("Получил текст элемента [{this.elementName}]")
+    @Step("Получен текст элемента [{this.elementName}]")
     protected String getText() {
         return getElement().getText();
     }

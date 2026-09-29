@@ -12,7 +12,7 @@ public class Button extends Element {
         this.buttonName = buttonName;
     }
 
-    @Step("Нажал на кнопку [{this.buttonName}]")
+    @Step("Пользователь нажимает на кнопку [{this.buttonName}]")
     public void buttonClick() {
         getElement().click();
     }
