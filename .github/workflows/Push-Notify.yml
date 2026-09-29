@@ -1,0 +1,81 @@
+name: Notify VK Teams - push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare Message Text
+        id: msg
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
+          COMMIT_AUTHOR: ${{ github.event.head_commit.author.name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_SHA: ${{ github.event.head_commit.id }}
+          REPO: ${{ github.repository }}
+          REPO_URL: ${{ github.event.repository.html_url }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          ADDED=$(git diff --diff-filter=A --name-only HEAD~1 HEAD | paste -sd ", " -)
+          MODIFIED=$(git diff --diff-filter=M --name-only HEAD~1 HEAD | paste -sd ", " -)
+          REMOVED=$(git diff --diff-filter=D --name-only HEAD~1 HEAD | paste -sd ", " -)
+
+          ADDED=${ADDED:-нет}
+          MODIFIED=${MODIFIED:-нет}
+          REMOVED=${REMOVED:-нет}
+
+          STATS_RESPONSE=$(curl -s \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/commits/$COMMIT_SHA")
+
+          if echo "$STATS_RESPONSE" | jq -e '.stats' >/dev/null 2>&1; then
+            LINES_ADDED=$(echo "$STATS_RESPONSE" | jq -r '.stats.additions // 0')
+            LINES_DELETED=$(echo "$STATS_RESPONSE" | jq -r '.stats.deletions // 0')
+          else
+            LINES_ADDED=0
+            LINES_DELETED=0
+          fi
+
+          echo "TEXT_DATA<<EOF" >> $GITHUB_ENV
+          echo "📦 Репозиторий: ${REPO_NAME}" >> $GITHUB_ENV
+          echo "🔗 ${REPO_URL}" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "💻 Новый коммит от ${COMMIT_AUTHOR}:" >> $GITHUB_ENV
+          echo "${COMMIT_MSG}" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "📊 Статистика изменений:" >> $GITHUB_ENV
+          echo "➕ Добавлено строк: $LINES_ADDED" >> $GITHUB_ENV
+          echo "➖ Удалено строк: $LINES_DELETED" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "📂 Файлы:" >> $GITHUB_ENV
+          echo "🆕 Добавлены: $ADDED" >> $GITHUB_ENV
+          echo "📝 Обновлены: $MODIFIED" >> $GITHUB_ENV
+          echo "🗑 Удалены: $REMOVED" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "Ссылка на коммит:" >> $GITHUB_ENV
+          echo "${COMMIT_URL}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Send VK Teams notification
+        env:
+          BOT_TOKEN: ${{ secrets.VK_TEAMS_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.VK_TEAMS_CHAT_ID }}
+          DOMAIN: ${{ secrets.VK_TEAMS_DOMAIN }}
+        run: >
+          curl --silent --show-error --insecure --max-time 15 -G -X POST
+          "${DOMAIN}bot/v1/messages/sendText"
+          --data-urlencode "token=${BOT_TOKEN}"
+          --data-urlencode "chatId=${CHAT_ID}"
+          --data-urlencode "text=${{ env.TEXT_DATA }}"
